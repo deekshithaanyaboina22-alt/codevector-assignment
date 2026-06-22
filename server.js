@@ -7,21 +7,14 @@ const app = express();
 app.use(express.json());
 app.use("/products", productsRoutes);
 
-app.get("/", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT NOW()");
-
-    res.json({
-      message: "Database Connected",
-      time: result.rows[0],
-    });
-  } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      error: "Database Connection Failed",
-    });
-  }
+app.get("/", (req, res) => {
+  res.json({
+    service: "CodeVector Product API",
+    status: "running",
+    endpoints: {
+      products: "/products",
+    },
+  });
 });
 
 const PORT = 5000;
